@@ -24,16 +24,12 @@ FRAMEWORKS=-framework OpenGL
 
 LIBS= -L/System/Library/Frameworks \
 	  -lglfw
-INCLUDES=-I/Users/raydelto/git/fps-test/common/includes
-
-
-	
+INCLUDES=-I./common/includes
 endif
 
-
-WARNINGS=-w
+WARNINGS=-Wall
 
 all:
-	g++ -c $(SRC) $(FRAMEWORKS) $(LIBS) $(INCLUDES) $(WARNINGS)
+	g++ -c $(SRC) $(INCLUDES) $(WARNINGS)
 	mv *.o ./bin
 	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS)
