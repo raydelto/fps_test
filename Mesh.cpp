@@ -54,8 +54,6 @@ bool Mesh::loadOBJ(const std::string& filename)
 			return false;
 		}
 
-		std::cout << "Loading OBJ file " << filename << " ..." << std::endl;
-
 		std::string lineBuffer;
 		while (std::getline(fin, lineBuffer))
 		{
@@ -92,7 +90,7 @@ bool Mesh::loadOBJ(const std::string& filename)
 					&p3, &t3, &n3);
 				#endif
 				if (match != 9)
-					std::cout << "Failed to parse OBJ file using our very simple OBJ loader" << std::endl;
+					std::cerr << "Failed to parse OBJ file using our very simple OBJ loader" << std::endl;
 
 				// We are ignoring normals (for now)
 
