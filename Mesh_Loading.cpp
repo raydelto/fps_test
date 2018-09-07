@@ -9,8 +9,8 @@
 #include <sstream>
 #include <string>
 #define GLEW_STATIC
-#include "GL/glew.h"	// Important - this header must come before glfw3 header
-#include "GLFW/glfw3.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -46,16 +46,17 @@ bool initOpenGL();
 //-----------------------------------------------------------------------------
 int main()
 {
+	std::cout << "GO!" << std::endl;
 	if (!initOpenGL())
 	{
 		// An error occured
 		std::cerr << "GLFW initialization failed" << std::endl;
 		return -1;
 	}
-
+	std::cout << "A1" << std::endl;
 	ShaderProgram shaderProgram;
 	shaderProgram.loadShaders("shaders/basic.vert", "shaders/basic.frag");
-
+	std::cout << "A2" << std::endl;
 	// Load meshes and textures
 	const int numModels = 4;
 	Mesh mesh[numModels];
@@ -149,19 +150,21 @@ bool initOpenGL()
 {
 	// Intialize GLFW 
 	// GLFW is configured.  Must be called before calling any GLFW functions
+	std::cout << "A" << std::endl;
 	if (!glfwInit())
 	{
 		// An error occured
 		std::cerr << "GLFW initialization failed" << std::endl;
 		return false;
 	}
+	std::cout << "B" << std::endl;
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);	// forward compatible with newer versions of OpenGL as they become available but not backward compatible (it will not run on devices that do not support OpenGL 3.3
 
-
+	std::cout << "C" << std::endl;
 	// Create an OpenGL 3.3 core, forward compatible context window
 	gWindow = glfwCreateWindow(gWindowWidth, gWindowHeight, APP_TITLE, NULL, NULL);
 	if (gWindow == NULL)
@@ -170,33 +173,33 @@ bool initOpenGL()
 		glfwTerminate();
 		return false;
 	}
-
+	std::cout << "D" << std::endl;
 	// Make the window's context the current one
 	glfwMakeContextCurrent(gWindow);
-
-	// Initialize GLEW
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK)
-	{
-		std::cerr << "Failed to initialize GLEW" << std::endl;
-		return false;
-	}
+	std::cout << "E" << std::endl;
+    // glad: load all OpenGL function pointers
+    // ---------------------------------------
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }	
 
 	// Set the required callback functions
 	glfwSetKeyCallback(gWindow, glfw_onKey);
 	glfwSetFramebufferSizeCallback(gWindow, glfw_onFramebufferSize);
 	glfwSetScrollCallback(gWindow, glfw_onMouseScroll);
-
+	std::cout << "F" << std::endl;
 	// Hides and grabs cursor, unlimited movement
 	glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPos(gWindow, gWindowWidth / 2.0, gWindowHeight / 2.0);
 
-	glClearColor(0.23f, 0.38f, 0.47f, 1.0f);
-
+	// glClearColor(0.23f, 0.38f, 0.47f, 1.0f);
+	std::cout << "G" << std::endl;
 	// Define the viewport dimensions
 	glViewport(0, 0, gWindowWidth, gWindowHeight);
 	glEnable(GL_DEPTH_TEST);
-
+	std::cout << "Z" << std::endl;
 	return true;
 }
 

@@ -5,6 +5,7 @@
 // Basic Mesh class
 //-----------------------------------------------------------------------------
 #include "Mesh.h"
+#include <cstdio>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -78,10 +79,18 @@ bool Mesh::loadOBJ(const std::string& filename)
 				int t1, t2, t3; //to store texture index
 				int n1, n2, n3;
 				const char* face = lineBuffer.c_str();
+				#ifdef _WIN64
 				int match = sscanf_s(face, "f %i/%i/%i %i/%i/%i %i/%i/%i",
 					&p1, &t1, &n1,
 					&p2, &t2, &n2,
 					&p3, &t3, &n3);
+
+				#else
+				int match = sscanf(face, "f %i/%i/%i %i/%i/%i %i/%i/%i",
+					&p1, &t1, &n1,
+					&p2, &t2, &n2,
+					&p3, &t3, &n3);
+				#endif
 				if (match != 9)
 					std::cout << "Failed to parse OBJ file using our very simple OBJ loader" << std::endl;
 

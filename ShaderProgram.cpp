@@ -33,23 +33,25 @@ ShaderProgram::~ShaderProgram()
 //-----------------------------------------------------------------------------
 bool ShaderProgram::loadShaders(const char* vsFilename, const char* fsFilename)
 {
+	std::cout << "X1" << std::endl;
 	string vsString = fileToString(vsFilename);
 	string fsString = fileToString(fsFilename);
 	const GLchar* vsSourcePtr = vsString.c_str();
 	const GLchar* fsSourcePtr = fsString.c_str();
-
-	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-
+	std::cout << "X2" << std::endl;
+	// std::cout << vsSourcePtr << std::endl;
+	int vs = glCreateShader(GL_VERTEX_SHADER);
+	int fs = glCreateShader(GL_FRAGMENT_SHADER);
+	std::cout << "X3" << std::endl;
 	glShaderSource(vs, 1, &vsSourcePtr, NULL);
 	glShaderSource(fs, 1, &fsSourcePtr, NULL);
-
+	std::cout << "X4" << std::endl;
 	glCompileShader(vs);
 	checkCompileErrors(vs, VERTEX);
 
 	glCompileShader(fs);
 	checkCompileErrors(fs, FRAGMENT);
-
+	std::cout << "X3" << std::endl;
 	mHandle = glCreateProgram();
 	if (mHandle == 0)
 	{
