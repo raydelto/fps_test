@@ -3,7 +3,7 @@ SRC=src/Texture2d.cpp \
 	src/Mesh.cpp \
 	src/Camera.cpp \
 	src/Mesh_Loading.cpp \
-	src/glad.c
+	third-party-source-code/glad.c
 
 OBJ=bin/Texture2d.o \
 	bin/ShaderProgram.o \
