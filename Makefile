@@ -1,9 +1,9 @@
-SRC=Texture2d.cpp \
-	ShaderProgram.cpp \
-	Mesh.cpp \
-	Camera.cpp \
-	Mesh_Loading.cpp \
-	glad.c
+SRC=src/Texture2d.cpp \
+	src/ShaderProgram.cpp \
+	src/Mesh.cpp \
+	src/Camera.cpp \
+	src/Mesh_Loading.cpp \
+	src/glad.c
 
 OBJ=bin/Texture2d.o \
 	bin/ShaderProgram.o \
@@ -24,7 +24,7 @@ FRAMEWORKS=-framework OpenGL
 
 LIBS= -L/System/Library/Frameworks \
 	  -lglfw
-INCLUDES=-I./common/includes
+INCLUDES=-I./includes
 endif
 
 WARNINGS=-Wall
