@@ -12,7 +12,6 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-	// Important - this header must come before glfw3 header
 #include "glm/glm.hpp"
 
 

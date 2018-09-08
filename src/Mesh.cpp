@@ -5,7 +5,6 @@
 // Basic Mesh class
 //-----------------------------------------------------------------------------
 #include "Mesh.h"
-#include <cstdio>
 #include <iostream>
 #include <sstream>
 #include <fstream>
