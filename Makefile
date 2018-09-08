@@ -31,5 +31,6 @@ WARNINGS=-Wall
 
 all:
 	g++ -c $(SRC) $(INCLUDES) $(WARNINGS)
+	ls bin>/dev/null||mkdir bin
 	mv *.o ./bin
 	g++ $(OBJ) $(FRAMEWORKS) $(LIBS) $(INCLUDES) -o bin/main $(WARNINGS)
