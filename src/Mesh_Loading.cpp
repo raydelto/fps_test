@@ -87,14 +87,17 @@ int main()
 	};
 
 	double lastTime = glfwGetTime();
-
+	double currentTime = 0.0;
+	double deltaTime = 0.0;
+	glm::mat4 model, view, projection;
+	
 	// Rendering loop
 	while (!glfwWindowShouldClose(gWindow))
 	{
 		showFPS(gWindow);
 
-		double currentTime = glfwGetTime();
-		double deltaTime = currentTime - lastTime;
+		currentTime = glfwGetTime();
+		deltaTime = currentTime - lastTime;
 
 		// Poll for and process events
 		glfwPollEvents();
@@ -103,7 +106,6 @@ int main()
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 model, view, projection;
 
 		// Create the View matrix
 		view = fpsCamera.getViewMatrix();
