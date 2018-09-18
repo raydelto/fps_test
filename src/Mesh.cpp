@@ -26,6 +26,11 @@ Mesh::~Mesh()
 	glDeleteBuffers(1, &mVBO);
 }
 
+const char* Mesh::getName() const
+{
+	return "OBJ";
+}
+
 //-----------------------------------------------------------------------------
 // Loads a Wavefront OBJ model
 //
@@ -37,7 +42,7 @@ Mesh::~Mesh()
 //  - We ignore normals
 //  - only commands "v", "vt" and "f" are supported
 //-----------------------------------------------------------------------------
-bool Mesh::loadOBJ(const std::string& filename)
+bool Mesh::load(const std::string& filename)
 {
 	std::vector<unsigned int> vertexIndices, uvIndices;
 	std::vector<glm::vec3> tempVertices;
@@ -116,6 +121,7 @@ bool Mesh::loadOBJ(const std::string& filename)
 		// Create and initialize the buffers
 		initBuffers();
 
+
 		return (mLoaded = true);
 	}
 
@@ -138,11 +144,11 @@ void Mesh::initBuffers()
 
 	// Vertex Positions
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), (GLvoid*)0);
 
 	// Vertex Texture Coords
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE, sizeof(Vertex), (GLvoid*)(3 * sizeof(GLfloat)));
 
 	// unbind to make sure other code does not change it somewhere else
 	glBindVertexArray(0);

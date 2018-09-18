@@ -18,6 +18,7 @@
 #include "Texture2D.h"
 #include "Camera.h"
 #include "Mesh.h"
+#include "Md2Model.h"
 
 
 // Global Variables
@@ -56,26 +57,34 @@ int main()
 	shaderProgram.loadShaders("shaders/basic.vert", "shaders/basic.frag");
 
 	// Load meshes and textures
-	const int numModels = 4;
-	Mesh mesh[numModels];
+	const int numModels = 5;
+	std::vector<MeshInterface*> mesh;
 	Texture2D texture[numModels];
 
-	mesh[0].loadOBJ("models/crate.obj");
-	mesh[1].loadOBJ("models/woodcrate.obj");
-	mesh[2].loadOBJ("models/robot.obj");
-	mesh[3].loadOBJ("models/floor.obj");
+	mesh.push_back(new Mesh());
+	mesh[0]->load("models/crate.obj");
+	mesh.push_back(new Mesh());
+	mesh[1]->load("models/woodcrate.obj");
+	mesh.push_back(new Mesh());
+	mesh[2]->load("models/robot.obj");
+	mesh.push_back(new Mesh());
+	mesh[3]->load("models/floor.obj");
+	mesh.push_back(new Md2Model());
+	mesh[4]->load("models/female.md2");
 	
 	texture[0].loadTexture("textures/crate.jpg", true);
 	texture[1].loadTexture("textures/woodcrate_diffuse.jpg", true);
 	texture[2].loadTexture("textures/robot_diffuse.jpg", true);
 	texture[3].loadTexture("textures/tile_floor.jpg", true);
+	texture[4].loadTexture("textures/female.tga", true);
 	
 	// Model positions
 	glm::vec3 modelPos[] = {
 		glm::vec3(-2.5f, 1.0f, 0.0f),	// crate1
 		glm::vec3(2.5f, 1.0f, 0.0f),	// crate2
 		glm::vec3(0.0f, 0.0f, -2.0f),	// robot
-		glm::vec3(0.0f, 0.0f, 0.0f)		// floor
+		glm::vec3(0.0f, 0.0f, 0.0f),		// floor
+		glm::vec3(0.0f, 0.0f, -6.0f)		// Female
 	};
 
 	// Model scale
@@ -83,7 +92,8 @@ int main()
 		glm::vec3(1.0f, 1.0f, 1.0f),	// crate1
 		glm::vec3(1.0f, 1.0f, 1.0f),	// crate2
 		glm::vec3(1.0f, 1.0f, 1.0f),	// robot
-		glm::vec3(10.0f, 1.0f, 10.0f)	// floor
+		glm::vec3(10.0f, 1.0f, 10.0f),	// floor
+		glm::vec3(0.5f, 0.5f, 0.5f)	// female
 	};
 
 	double lastTime = glfwGetTime();
@@ -128,7 +138,15 @@ int main()
 			shaderProgram.setUniform("model", model);
 
 			texture[i].bind(0);		// set the texture before drawing.  Our simple OBJ mesh loader does not do materials yet.
-			mesh[i].draw();			// Render the OBJ mesh
+			if(dynamic_cast<const Mesh*>(mesh[i]) != nullptr)
+			{
+				Mesh *localMesh = dynamic_cast<Mesh*>(mesh[i]);
+				localMesh->draw();
+			}else
+			{
+				Md2Model *localMesh = dynamic_cast<Md2Model*>(mesh[i]);
+				localMesh->draw();
+			}			
 			texture[i].unbind(0);	
 		}
 
@@ -139,7 +157,6 @@ int main()
 	}
 
 	glfwTerminate();
-
 	return 0;
 }
 

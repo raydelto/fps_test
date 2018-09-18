@@ -8,11 +8,11 @@
 #define MESH_H
 
 #include <vector>
-#include <string>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
+#include "MeshInterface.h"
 
 
 struct Vertex
@@ -21,15 +21,17 @@ struct Vertex
 	glm::vec2 texCoords;
 };
 
-class Mesh
+class Mesh: public MeshInterface
 {
 public:
 
 	 Mesh();
 	~Mesh();
 
-	bool loadOBJ(const std::string& filename);
-	void draw();
+	virtual bool load(const std::string& filename);
+	virtual void draw();
+	virtual const char* getName() const;
+
 
 private:
 

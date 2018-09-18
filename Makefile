@@ -1,17 +1,20 @@
 SRC=src/Texture2d.cpp \
 	src/ShaderProgram.cpp \
+	src/MeshInterface.cpp \
+	src/Mesh_Loading.cpp \
+	src/Md2Model.cpp \
 	src/Mesh.cpp \
 	src/Camera.cpp \
-	src/Mesh_Loading.cpp \
-	third-party-source-code/glad.c
+	third-party-source-code/glad.c \
 
 OBJ=bin/Texture2d.o \
 	bin/ShaderProgram.o \
+	bin/MeshInterface.o \
+	bin/Mesh_Loading.o \
+	bin/Md2Model.o \
 	bin/Mesh.o \
 	bin/Camera.o \
-	bin/Mesh_Loading.o \
 	bin/glad.o
-
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
