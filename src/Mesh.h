@@ -15,11 +15,7 @@
 #include "MeshInterface.h"
 
 
-struct Vertex
-{
-	glm::vec3 position;
-	glm::vec2 texCoords;
-};
+struct Vertex;
 
 class Mesh: public MeshInterface
 {
@@ -29,16 +25,9 @@ public:
 	~Mesh();
 
 	virtual bool load(const std::string& filename);
-	virtual void draw();
 	virtual const char* getName() const;
 
-
 private:
-
-	void initBuffers();
-
 	bool mLoaded;
-	std::vector<Vertex> mVertices;
-	GLuint mVBO, mVAO;
 };
 #endif //MESH_H

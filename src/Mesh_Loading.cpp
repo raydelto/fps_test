@@ -19,7 +19,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Md2Model.h"
-
+#include "RayMesh.h"
 
 // Global Variables
 const char* APP_TITLE = "Introduction to Modern OpenGL - Loading OBJ Models";
@@ -57,7 +57,7 @@ int main()
 	shaderProgram.loadShaders("shaders/basic.vert", "shaders/basic.frag");
 
 	// Load meshes and textures
-	const int numModels = 5;
+	const int numModels = 6;
 	std::vector<MeshInterface*> mesh;
 	Texture2D texture[numModels];
 
@@ -71,12 +71,19 @@ int main()
 	mesh[3]->load("models/floor.obj");
 	mesh.push_back(new Md2Model());
 	mesh[4]->load("models/female.md2");
-	
+	mesh.push_back(new RayMesh());
+	mesh[5]->load("models/female.md2");
+
+
+
+
 	texture[0].loadTexture("textures/crate.jpg", true);
 	texture[1].loadTexture("textures/woodcrate_diffuse.jpg", true);
 	texture[2].loadTexture("textures/robot_diffuse.jpg", true);
 	texture[3].loadTexture("textures/tile_floor.jpg", true);
 	texture[4].loadTexture("textures/female.tga", true);
+	texture[5].loadTexture("textures/crate.jpg", true);
+
 	
 	// Model positions
 	glm::vec3 modelPos[] = {
@@ -84,7 +91,8 @@ int main()
 		glm::vec3(2.5f, 1.0f, 0.0f),	// crate2
 		glm::vec3(0.0f, 0.0f, -2.0f),	// robot
 		glm::vec3(0.0f, 0.0f, 0.0f),		// floor
-		glm::vec3(0.0f, 0.0f, -6.0f)		// Female
+		glm::vec3(0.0f, 10.0f, -6.0f),		// Female
+		glm::vec3(0.0f, 2.0f, -3.0f)		// Ray
 	};
 
 	// Model scale
@@ -93,7 +101,9 @@ int main()
 		glm::vec3(1.0f, 1.0f, 1.0f),	// crate2
 		glm::vec3(1.0f, 1.0f, 1.0f),	// robot
 		glm::vec3(10.0f, 1.0f, 10.0f),	// floor
-		glm::vec3(0.5f, 0.5f, 0.5f)	// female
+		glm::vec3(0.1f, 0.1f, 0.1f),	// female
+		glm::vec3(1.0f, 1.0f, 1.0f)	// Ray
+
 	};
 
 	double lastTime = glfwGetTime();
@@ -137,16 +147,8 @@ int main()
 			model = glm::translate(glm::mat4(), modelPos[i]) * glm::scale(glm::mat4(), modelScale[i]);
 			shaderProgram.setUniform("model", model);
 
-			texture[i].bind(0);		// set the texture before drawing.  Our simple OBJ mesh loader does not do materials yet.
-			if(dynamic_cast<const Mesh*>(mesh[i]) != nullptr)
-			{
-				Mesh *localMesh = dynamic_cast<Mesh*>(mesh[i]);
-				localMesh->draw();
-			}else
-			{
-				Md2Model *localMesh = dynamic_cast<Md2Model*>(mesh[i]);
-				localMesh->draw();
-			}			
+			texture[i].bind(0);		// set the texture before drawing.  Our simple OBJ mesh loader does not do materials yet.	
+			mesh[i]->draw();
 			texture[i].unbind(0);	
 		}
 

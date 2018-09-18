@@ -5,7 +5,6 @@
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
 #include "MeshInterface.h"
-#include "Mesh.h"
 #include <vector>
 
 struct Vertex;
@@ -95,16 +94,11 @@ class Md2Model: public MeshInterface
 {
   private:
 	modData *mod;
-	std::vector<Vertex> mVertices;
-	GLuint mVBO, mVAO;
-	void InitBuffers();
-	
 
   public:
 	Md2Model(){};
 	Md2Model(char *fileName);
 	virtual bool load(const std::string& filename);	
-	virtual void draw();
 	virtual const char* getName() const;
 };
 
